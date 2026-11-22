@@ -1,0 +1,99 @@
+{
+  "name": "live-cutter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LIVE CUTTER - Your stream clipping workspace.",
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -b",
+    "build": "tsc -b && vite build",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "test:integration": "node --experimental-strip-types --test tests/youtube.integration.test.mjs",
+    "test:clip-integration": "node --experimental-strip-types --test tests/clip.integration.test.mjs",
+    "start": "electron .",
+    "version:check": "node scripts/check-version.mjs",
+    "dist:win": "npm run version:check && npm test && npm run build && node scripts/build-windows-icon.mjs && electron-builder --win nsis --x64 --publish never && node scripts/prepare-distribution.mjs",
+    "package": "npm run dist:win"
+  },
+  "build": {
+    "appId": "com.livecutter.app",
+    "productName": "LIVE CUTTER",
+    "artifactName": "LIVE-CUTTER-Setup-${version}-${arch}.${ext}",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor/yt-dlp",
+        "to": "yt-dlp",
+        "filter": [
+          "yt-dlp.exe",
+          "README.md",
+          "LICENSE.txt",
+          "GPL-3.0.txt",
+          "THIRD_PARTY_LICENSES.txt"
+        ]
+      },
+      {
+        "from": "vendor/ffmpeg",
+        "to": "ffmpeg",
+        "filter": [
+          "ffmpeg.exe",
+          "ffprobe.exe",
+          "LICENSE.txt",
+          "BUILD-INFO.txt"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "build/live-cutter.ico",
+      "verifyUpdateCodeSignature": true,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "LIVE CUTTER",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "LIVE-CUTTER-Setup-${version}-${arch}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "electron": "^45.4.1",
+    "electron-builder": "^26.18.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vite-plugin-electron": "^1.2.0"
+  },
+  "dependencies": {
+    "electron-updater": "6.8.12"
+  }
+}

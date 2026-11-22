@@ -1,0 +1,16 @@
+FFmpeg/FFprobe Windows x64 build included with LIVE CUTTER
+
+Upstream FFmpeg version: n9.0.2-61-gd59078794d-20261120
+Build release: https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/tag/autobuild-2026-11-20-12-40
+Build source: https://github.com/FFmpeg-Builds/FFmpeg-Builds
+FFmpeg source revision: https://github.com/FFmpeg/FFmpeg/tree/n9.0.2-61-gd59078794d
+License notice: see LICENSE.txt (LGPL v3 text distributed with this build)
+Archive: ffmpeg-n9.0.2-61-gd59078794d-win64-lgpl-9.0.zip
+Archive SHA-256: 814c62c35ca7e2b15d85b0a2a5b79bbf21783176520154f26a6df1e9df72761e
+ffmpeg.exe SHA-256: EF86EF98A5070DF9860DF37183C23A6DCF9530DEA543C0C78A749FF616C78111
+ffprobe.exe SHA-256: 1A18E77FB341FF26B9AD456FC03E4225F0AE3C1FFA03901AD3E691B702179C56
+
+Build is static LGPL, without --enable-gpl and --enable-nonfree. Encoder
+inventory was checked locally: h264_mf and aac are present; libx264 is absent.
+The application only redistributes ffmpeg.exe, ffprobe.exe and this notice.
+Review upstream license and source-distribution requirements before publishing.

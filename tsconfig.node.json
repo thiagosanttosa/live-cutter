@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+
+    // Os .d.ts de terceiros do vite-plugin-electron/local-pkg tem erros proprios
+    // (tipo `Args` nao declarado; import do pacote opcional
+    // vite-plugin-electron-renderer). So este projeto os importa. Nosso codigo
+    // continua 100% checado; `src/` NAO usa skipLibCheck.
+    "skipLibCheck": true,
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true
+  },
+  "include": ["electron", "vite.config.ts"]
+}

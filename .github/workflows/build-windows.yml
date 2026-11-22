@@ -1,0 +1,42 @@
+name: Build Windows installer
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22.12.0'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate version and run tests
+        run: |
+          npm run version:check
+          npm run typecheck
+          npm test
+      - name: Build unsigned installer without publishing
+        run: npm run dist:win
+      - name: Upload installer for review
+        uses: actions/upload-artifact@v6
+        with:
+          name: live-cutter-windows-${{ github.ref_name }}
+          path: |
+            release/LIVE-CUTTER-Setup-*-x64.exe
+            release/*.blockmap
+            release/latest.yml
+            release/documentacao-de-distribuicao/**
+          if-no-files-found: error
+          retention-days: 30
